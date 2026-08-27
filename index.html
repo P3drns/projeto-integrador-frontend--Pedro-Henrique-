@@ -61,20 +61,39 @@
       </table>
     </section>
  
-    <!-- Seção com uma imagem de exemplo -->
-     <section>
+    <!-- Seção com uma imagem e um vídeo de exemplo -->
+    <section>
       <h2>Prato em Destaque</h2>
       <img src="assets/images/feijoada.jpg" alt="Prato de feijoada completa com arroz, couve e laranja">
  
-      <!-- Vídeo do YouTube incorporado com iframe -->
+      <!-- Vídeo nativo HTML5 do modo de preparo, com fallback de formatos -->
       <h3>Modo de Preparo em Vídeo</h3>
-      <iframe
-        width="560"
-        height="315"
-        src="https://www.youtube.com/embed/Uxmebkjdx9o"
-        title="Vídeo sobre o modo de preparo do prato"
-        allowfullscreen>
-      </iframe>
+ 
+      <!--
+        preload="metadata": este vídeo é um complemento à seção (não é o
+        conteúdo principal da página), então evitamos baixar o arquivo
+        inteiro de antemão. Carregamos apenas metadados (duração,
+        dimensões) para já exibir informações básicas ao usuário sem
+        gastar banda até que ele decida dar play.
+      -->
+      <video
+        controls
+        poster="assets/images/poster-preparo.jpg"
+        preload="metadata"
+        width="560">
+        <!-- WebM primeiro: formato mais eficiente/moderno -->
+        <source src="assets/videos/preparo.webm" type="video/webm">
+        <!-- MP4 como fallback: maior compatibilidade (Safari/iOS, navegadores antigos) -->
+        <source src="assets/videos/preparo.mp4" type='video/mp4; codecs="avc1.64001E, mp4a.40.2"'>
+        <!-- Legendas em português -->
+        <track kind="subtitles" src="assets/videos/preparo-feijoada-pt.vtt" srclang="pt" label="Português" default>
+ 
+        Seu navegador não suporta a reprodução deste vídeo.
+        Você pode <a href="assets/videos/preparo.mp4">baixar o vídeo aqui</a>.
+      </video>
+ 
+      <!-- Mensagem discreta gerada via canPlayType() (Desafio Extra) -->
+      <small id="formato-suportado"></small>
  
       <p>
         Saiba mais sobre a origem da feijoada na
@@ -125,6 +144,33 @@
   <footer>
     <p>Projeto Integrador &mdash; Desenvolvimento Front-end para Web</p>
   </footer>
+ 
+  <!--
+    Desafio Extra: roda canPlayType() para os formatos usados nos <source>
+    do vídeo e insere no DOM uma mensagem indicando qual formato o
+    navegador do visitante provavelmente vai usar. Não altera a
+    reprodução em si, é apenas uma demonstração do algoritmo de seleção.
+  -->
+  <script>
+    const video = document.querySelector('video');
+    const aviso = document.getElementById('formato-suportado');
+ 
+    const formatos = [
+      { label: 'WebM (VP8/Opus)', mime: 'video/webm' },
+      { label: 'MP4 (H.264/AAC)', mime: 'video/mp4; codecs="avc1.64001E, mp4a.40.2"' }
+    ];
+ 
+    const suportado = formatos.find(f => video.canPlayType(f.mime) === 'probably');
+ 
+    if (suportado) {
+      aviso.textContent = `Seu navegador provavelmente vai reproduzir este vídeo em ${suportado.label}.`;
+    } else {
+      const talvezSuportado = formatos.find(f => video.canPlayType(f.mime) === 'maybe');
+      aviso.textContent = talvezSuportado
+        ? `Seu navegador pode conseguir reproduzir este vídeo em ${talvezSuportado.label}.`
+        : 'Não foi possível confirmar suporte a nenhum dos formatos de vídeo oferecidos.';
+    }
+  </script>
  
 </body>
 </html>
