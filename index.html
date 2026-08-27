@@ -1,52 +1,119 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo de Alimentos</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <title>Catálogo de Comida - Projeto Integrador</title>
 </head>
 <body>
-    <header>
-        <h1>Catálogo de Alimentos</h1>
-        <nav>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#catalogo">Catálogo</a></li>
-                <li><a href="#sobre">Sobre</a></li>
-                <li><a href="#contato">Contato</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <main>
-        <section id="home">
-            <h2>Bem-vindo</h2>
-            <p>Explore nosso catálogo completo de alimentos.</p>
-        </section>
-
-        <section id="catalogo">
-            <h2>Catálogo</h2>
-            <div class="products">
-                <!-- Produtos serão adicionados aqui -->
-            </div>
-        </section>
-
-        <section id="sobre">
-            <h2>Sobre</h2>
-            <p>Informações sobre o catálogo de alimentos.</p>
-        </section>
-
-        <section id="contato">
-            <h2>Contato</h2>
-            <p>Entre em contato conosco para mais informações.</p>
-        </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2026 Catálogo de Alimentos. Todos os direitos reservados.</p>
-    </footer>
-
-    <script src="script.js"></script>
+ 
+  <!-- Cabeçalho da página, com a navegação principal dentro -->
+  <header>
+    <h1>Catálogo de Comida</h1>
+    <nav>
+      <ul>
+        <li><a href="#pratos">Pratos</a></li>
+        <li><a href="#sugestao">Sugerir um Prato</a></li>
+      </ul>
+    </nav>
+  </header>
+ 
+  <!-- Conteúdo principal da página (só pode ter um main por página) -->
+  <main>
+ 
+    <!-- Seção com a apresentação do site -->
+    <section>
+      <h2>Sobre o Catálogo</h2>
+      <p>
+        Este é um catálogo simples de pratos, criado como Projeto Integrador
+        da disciplina de Desenvolvimento Front-end. Aqui reúno alguns dos
+        meus pratos favoritos, com nome, tipo e uma breve descrição.
+      </p>
+    </section>
+ 
+    <!-- Seção com a lista de pratos -->
+    <section id="pratos">
+      <h2>Lista de Pratos</h2>
+      <ul>
+        <li>Feijoada completa</li>
+        <li>Moqueca de peixe</li>
+        <li>Lasanha à bolonhesa</li>
+      </ul>
+ 
+      <!-- Tabela comparando os pratos, como pedido na Aula 2 -->
+      <h3>Comparativo dos Pratos</h3>
+      <table>
+        <tr>
+          <th>Prato</th>
+          <th>Nota</th>
+        </tr>
+        <tr>
+          <td>Feijoada completa</td>
+          <td>9</td>
+        </tr>
+        <tr>
+          <td>Moqueca de peixe</td>
+          <td>8</td>
+        </tr>
+        <tr>
+          <td>Lasanha à bolonhesa</td>
+          <td>7</td>
+        </tr>
+      </table>
+    </section>
+ 
+    <!-- Seção com uma imagem de exemplo -->
+    <section>
+      <h2>Prato em Destaque</h2>
+      <img src="assets/images/feijoada.jpg" alt="Prato de feijoada completa com arroz, couve e laranja">
+      <p>
+        Saiba mais sobre a origem da feijoada na
+        <a href="https://pt.wikipedia.org/wiki/Feijoada" target="_blank" rel="noopener noreferrer">Wikipédia</a>.
+      </p>
+    </section>
+ 
+    <!-- Formulário para o usuário sugerir um prato novo -->
+    <section id="sugestao">
+      <h2>Sugerir um Prato</h2>
+ 
+      <form>
+        <fieldset>
+          <legend>Dados do Prato</legend>
+ 
+          <label for="nome-prato">Nome do prato</label>
+          <input type="text" id="nome-prato" name="nome-prato" required minlength="3">
+ 
+          <label for="categoria">Categoria</label>
+          <select id="categoria" name="categoria">
+            <option value="">Selecione...</option>
+            <option value="entrada">Entrada</option>
+            <option value="prato-principal">Prato Principal</option>
+            <option value="sobremesa">Sobremesa</option>
+          </select>
+ 
+          <label for="nota">Sua nota (0 a 10)</label>
+          <input type="number" id="nota" name="nota" min="0" max="10">
+ 
+          <label for="vegetariano">É vegetariano?</label>
+          <input type="checkbox" id="vegetariano" name="vegetariano">
+        </fieldset>
+ 
+        <fieldset>
+          <legend>Seus Dados</legend>
+ 
+          <label for="email">Seu e-mail</label>
+          <input type="email" id="email" name="email" required>
+        </fieldset>
+ 
+        <button type="submit">Enviar Sugestão</button>
+      </form>
+    </section>
+ 
+  </main>
+ 
+  <!-- Rodapé da página -->
+  <footer>
+    <p>Projeto Integrador &mdash; Desenvolvimento Front-end para Web</p>
+  </footer>
+ 
 </body>
 </html>
