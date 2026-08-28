@@ -16,3 +16,6 @@ Melhora a experiência do cliente antes mesmo da compra.
 Em versões digitais, pode integrar pedido e pagamento diretamente.
 
 Fortalece o relacionamento entre marca e consumidor através da apresentação visual.
+
+
+Rafael: Projeto tá massa, tudo certinho no seu devido lugar
