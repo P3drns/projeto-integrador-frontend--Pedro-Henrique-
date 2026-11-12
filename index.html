@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Catálogo de Comida - Projeto Integrador</title>
+
+  <!-- Aula 6: reset primeiro, style depois (a ordem importa por causa da cascata) -->
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/style.css">
 
@@ -11,6 +13,7 @@
   <script src="js/catalogo.js" defer></script>
 </head>
 <body>
+
   <header class="topo">
     <nav class="navbar" aria-label="Navegação principal">
       <a href="#inicio" class="logo">Catálogo de Comida</a>
@@ -37,6 +40,7 @@
     </nav>
   </header>
 
+  <!-- Aula 3: só pode ter UM <main> por página, direto no <body> -->
   <main class="conteudo">
 
     <section class="sobre" id="inicio">
@@ -59,6 +63,7 @@
 
       <img class="sobre-imagem" src="assets/images/feijoada.svg" alt="" width="560" height="360">
     </section>
+
     <section class="area-pratos" id="pratos">
       <h2>Lista de Pratos</h2>
 
@@ -105,6 +110,7 @@
       </div>
     </section>
 
+    
     <section class="comparativo">
       <h2>Comparativo dos Pratos</h2>
       <div class="rolagem-tabela">
@@ -128,7 +134,6 @@
       </div>
     </section>
 
-    -->
     <section class="grafico">
       <h2>Nota Média por Categoria</h2>
       <canvas id="grafico-categorias" width="360" height="200"
@@ -147,7 +152,6 @@
              width="560" height="360">
         <figcaption>Feijoada completa: a maior nota do catálogo.</figcaption>
 
-        -->
         <svg class="selo" viewBox="0 0 140 60" width="140" height="60"
              role="img" aria-labelledby="titulo-selo">
           <title id="titulo-selo">Selo: Favorito da casa</title>
@@ -168,6 +172,8 @@
           <a href="assets/videos/preparo.mp4">Baixe o vídeo aqui</a>.
         </p>
       </video>
+
+      <!-- O main.js escreve aqui o formato que o navegador deve usar (canPlayType) -->
       <small class="aviso-formato"></small>
 
       <p>
