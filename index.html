@@ -9,11 +9,21 @@
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/style.css">
 
+  <!--
+    Aula 11 (seção 16): defer faz o script rodar só DEPOIS do HTML ser lido,
+    senão o querySelector devolveria null. Os dois arquivos dividem o mesmo
+    escopo global e o catalogo.js usa uma função do main.js, então a ordem
+    aqui é: main.js primeiro, catalogo.js depois.
+  -->
   <script src="js/main.js" defer></script>
   <script src="js/catalogo.js" defer></script>
 </head>
 <body>
 
+  <!--
+    Aula 3: <header> tem role implícito "banner". Aqui dentro vai só a navbar.
+    O <h1> da página fica no <main>, assim só existe UM h1 (Aula 3, seção 5).
+  -->
   <header class="topo">
     <nav class="navbar" aria-label="Navegação principal">
       <a href="#inicio" class="logo">Catálogo de Comida</a>
@@ -32,6 +42,11 @@
         <li><a href="#sugestao">Sugerir um prato</a></li>
       </ul>
 
+      <!--
+        Aula 8, seção 7: só a ESTRUTURA do hambúrguer. É um <button> de verdade
+        (e não uma <div>) com aria-label e aria-expanded já no HTML.
+        O clique pra abrir/fechar eu faço quando chegar a parte de eventos.
+      -->
       <button class="menu-hamburguer" type="button" aria-label="Abrir menu" aria-expanded="false">
         <span class="barra"></span>
         <span class="barra"></span>
@@ -43,6 +58,12 @@
   <!-- Aula 3: só pode ter UM <main> por página, direto no <body> -->
   <main class="conteudo">
 
+    <!--
+      Hero (topo da página): texto à esquerda e imagem à direita, em Grid.
+      A imagem é decorativa (alt vazio) porque a mesma foto já é descrita
+      na seção "Prato em Destaque". A frase do favorito é preenchida pelo
+      catalogo.js com o prato de maior média.
+    -->
     <section class="sobre" id="inicio">
       <div class="sobre-texto">
         <h1>Catálogo de Comida</h1>
@@ -64,6 +85,11 @@
       <img class="sobre-imagem" src="assets/images/feijoada.svg" alt="" width="560" height="360">
     </section>
 
+    <!--
+      Cada card guarda os dados do prato em atributos data-* (Aula 11).
+      O catalogo.js lê esses dados, calcula a média e mostra a pontuação.
+      ID só em #pratos porque é único na página e é âncora do menu (Aula 6).
+    -->
     <section class="area-pratos" id="pratos">
       <h2>Lista de Pratos</h2>
 
@@ -110,7 +136,7 @@
       </div>
     </section>
 
-    
+    <!-- Tabela da Aula 2, agora com caption, thead/tbody e scope (Aula 3) -->
     <section class="comparativo">
       <h2>Comparativo dos Pratos</h2>
       <div class="rolagem-tabela">
@@ -134,6 +160,11 @@
       </div>
     </section>
 
+    <!--
+      Aula 5: gráfico em Canvas. Tamanho pelos ATRIBUTOS width/height (e não
+      por CSS) pra não borrar. O texto dentro da tag é o fallback pra leitor
+      de tela, e o main.js atualiza esse texto com os números reais.
+    -->
     <section class="grafico">
       <h2>Nota Média por Categoria</h2>
       <canvas id="grafico-categorias" width="360" height="200"
@@ -152,6 +183,11 @@
              width="560" height="360">
         <figcaption>Feijoada completa: a maior nota do catálogo.</figcaption>
 
+        <!--
+          Aula 5: selo em SVG (vetorial, não perde nitidez). Tem viewBox,
+          role="img" e <title> com id ligado por aria-labelledby, pra ter
+          um nome acessível.
+        -->
         <svg class="selo" viewBox="0 0 140 60" width="140" height="60"
              role="img" aria-labelledby="titulo-selo">
           <title id="titulo-selo">Selo: Favorito da casa</title>
@@ -163,6 +199,12 @@
 
       <h3>Modo de Preparo em Vídeo</h3>
 
+      <!--
+        Aula 4: preload="metadata" porque o vídeo é só um complemento da seção,
+        então não gasto banda baixando tudo antes do play.
+        A ordem dos <source> é a ordem de preferência: WebM primeiro, MP4
+        como fallback (Safari/iOS). O <track> traz a legenda em WebVTT.
+      -->
       <video controls poster="assets/images/poster-preparo.svg" preload="metadata" width="560">
         <source src="assets/videos/preparo.webm" type="video/webm">
         <source src="assets/videos/preparo.mp4" type='video/mp4; codecs="avc1.64001E, mp4a.40.2"'>
@@ -181,6 +223,12 @@
         <a href="https://pt.wikipedia.org/wiki/Feijoada" target="_blank" rel="noopener noreferrer">Wikipédia</a>.
       </p>
     </section>
+
+    <!--
+      Aula 3: todo <label for> tem o MESMO valor do id do input (senão o nome
+      acessível some e o clique no label não foca o campo). Cada campo usa o
+      type certo (number, email) pra ganhar validação nativa e teclado do celular.
+    -->
     <section class="card-sugestao" id="sugestao">
       <h2>Sugerir um Prato</h2>
 

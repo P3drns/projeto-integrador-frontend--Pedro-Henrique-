@@ -1,2 +1,5 @@
+# Aula 1: criar o .gitignore ANTES do primeiro git add
+.env
 node_modules/
-.env,
+.DS_Store
+*.log
