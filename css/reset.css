@@ -1,0 +1,26 @@
+/* ===== reset.css (Aula 6) =====
+   Zera as margens/paddings padrão do navegador e aplica border-box em tudo.
+   Sem o border-box, width + padding + border somam por fora e o layout estoura
+   (erro 2 da Aula 6). */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* 100% respeita o tamanho de fonte que a pessoa configurou no navegador (erro 3) */
+html {
+  font-size: 100%;
+}
+
+/* Mídia nunca passa do tamanho do container.
+   height:auto mantém a proporção quando o max-width entra em ação. */
+img, video, canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+/* display:block tira aquele espacinho de baixo que imagem inline deixa */
+img, video, canvas, svg {
+  display: block;
+}

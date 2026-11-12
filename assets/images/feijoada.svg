@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 360" width="560" height="360">
+  <rect width="560" height="360" fill="#e4ecdf"/>
+  <ellipse cx="280" cy="315" rx="215" ry="20" fill="#cdd8c7"/>
+  <!-- panela de feijão -->
+  <ellipse cx="225" cy="195" rx="160" ry="115" fill="#2b1b12"/>
+  <ellipse cx="225" cy="183" rx="138" ry="94" fill="#4a2c1a"/>
+  <ellipse cx="180" cy="168" rx="34" ry="17" fill="#7a3b25"/>
+  <ellipse cx="255" cy="200" rx="30" ry="15" fill="#8a4a2c"/>
+  <ellipse cx="215" cy="140" rx="24" ry="12" fill="#6b3220"/>
+  <!-- arroz -->
+  <ellipse cx="415" cy="225" rx="88" ry="62" fill="#f6f2e6"/>
+  <!-- couve -->
+  <path d="M 380 120 Q 430 70 480 120 Q 440 150 380 120 Z" fill="#2f7d32"/>
+  <!-- laranja -->
+  <circle cx="470" cy="290" r="38" fill="#f59e0b"/>
+  <circle cx="470" cy="290" r="28" fill="#fbbf24"/>
+</svg>

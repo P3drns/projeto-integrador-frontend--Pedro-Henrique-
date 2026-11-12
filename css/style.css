@@ -1,0 +1,507 @@
+/* ===== style.css =====
+   Aula 6: variáveis, seletores, box model, links, tabela
+   Aula 7: pseudo-classes, Flexbox e Grid
+   Aula 8: navbar, dropdown, sticky e hambúrguer
+   Aula 11: classes que o JavaScript liga/desliga (faixas e pontuação) */
+
+
+/* ---------- 1. VARIÁVEIS ---------- */
+:root {
+  --cor-primaria: #166534;         /* verde folha */
+  --cor-primaria-escura: #14532d;
+  --cor-acento: #dc2626;           /* vermelho pimenta */
+  --cor-milho: #eab308;            /* amarelo milho: estrelinha e foco */
+  --cor-acento-claro: #fef9c3;
+  --cor-texto: #1f2937;
+  --cor-texto-suave: #4b5563;
+  --cor-fundo: #f3f6f1;
+  --cor-card: #ffffff;
+  --cor-borda: #d6ddd2;
+  --cor-link-visitado: #6b3fa0;
+  --raio: 12px;
+  --raio-card: 10px;
+  --sombra: 0 4px 16px rgba(0, 0, 0, 0.08);
+  --transicao-padrao: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+
+/* ---------- 2. BASE ---------- */
+/* Aula 8 (seção 6): o body é FLEX em coluna, e não Grid. Um item de Grid usa a
+   própria "área" como bloco de contêiner, e a área do topo só tem a altura do
+   header, então o sticky nunca grudaria. Com Flex o bloco de contêiner é o body
+   inteiro. O Grid fica pro <main> e pros cards. */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  background: var(--cor-fundo);
+  color: var(--cor-texto);
+}
+
+/* Evita que o menu sticky cubra o título quando clico num link de âncora */
+html {
+  scroll-padding-top: 5rem;
+}
+
+h1, h2, h3, .logo {
+  font-family: Georgia, "Times New Roman", serif;
+  line-height: 1.25;
+}
+
+h1 { font-size: 2.2rem; color: var(--cor-primaria); }
+h2 { font-size: 1.5rem; margin-bottom: 0.75rem; }
+h3 { font-size: 1.15rem; margin: 1rem 0 0.5rem; }
+
+p { margin-bottom: 0.75rem; }
+
+/* Links: os 4 estados na ordem LoVe/HAte (Aula 6). Todos têm a mesma
+   especificidade, então quem vem por último ganha. */
+a:link { color: var(--cor-primaria); text-decoration: none; }
+a:visited { color: var(--cor-link-visitado); }
+a:hover { text-decoration: underline; }
+a:active { color: var(--cor-acento); }
+
+/* Foco visível pra quem navega com o teclado (Aula 7, seção 2.1) */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--cor-milho);
+  outline-offset: 2px;
+}
+
+
+/* ---------- 3. NAVBAR (Aula 8) ---------- */
+/* O sticky fica no <header> porque o pai dele (o body) é o bloco de contêiner
+   e não tem overflow. Se a navbar ficasse dentro de um <div> com
+   overflow:hidden, o sticky pararia de funcionar (erro 3 da Aula 8).
+   O z-index vai em QUEM cria o contexto de empilhamento (o header), e não no
+   dropdown: assim ele vence os cards (que têm z-index:1) sem precisar de 9999. */
+.topo {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--cor-card);
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0.5rem 1.5rem;
+}
+
+.logo {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  list-style: none;
+}
+
+/* Mesma especificidade do a:visited (11), mas vem depois no arquivo, então
+   o menu não fica roxo nos links visitados */
+.menu a {
+  display: inline-block;
+  padding: 0.5rem 0;
+  color: var(--cor-texto);
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.menu a:hover {
+  color: var(--cor-primaria);
+  text-decoration: none;
+}
+
+/* .ativo é fixo (página atual); :hover é temporário (Aula 8, seção 3) */
+.menu a.ativo {
+  color: var(--cor-primaria);
+  border-bottom-color: var(--cor-primaria);
+}
+
+/* Dropdown: a lista aninhada fica escondida e aparece no :hover do <li> pai.
+   Erro 2 da Aula 8: o <li> pai TEM position:relative, senão o dropdown
+   se posicionaria em relação à página inteira. */
+.tem-dropdown {
+  position: relative;
+}
+
+/* Erro 4 da Aula 8: top:100% e sem margin, então não existe "buraco" entre o
+   item e o dropdown (o hover não se perde no caminho). */
+.dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1;
+  min-width: 11rem;
+  padding: 0.5rem 0;
+  list-style: none;
+  background: var(--cor-card);
+  border: 1px solid var(--cor-borda);
+  border-radius: 8px;
+  box-shadow: var(--sombra);
+}
+
+.dropdown a {
+  display: block;
+  padding: 0.5rem 1rem;
+}
+
+/* :focus-within faz o menu abrir também pelo teclado (Tab), não só com o mouse */
+.tem-dropdown:hover .dropdown,
+.tem-dropdown:focus-within .dropdown {
+  display: block;
+}
+
+/* Hambúrguer: só a estrutura visual por enquanto. Escondido no desktop,
+   aparece em telas estreitas pela media query lá embaixo. */
+.menu-hamburguer {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  padding: 0.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.menu-hamburguer .barra {
+  width: 24px;
+  height: 3px;
+  background: var(--cor-texto);
+  border-radius: 2px;
+}
+
+
+/* ---------- 4. LAYOUT DA PÁGINA (Aula 7: Grid com áreas nomeadas) ---------- */
+.conteudo {
+  flex: 1;                       /* empurra o rodapé pro fim da tela */
+  display: grid;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 2rem;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "sobre"
+    "pratos"
+    "comparativo"
+    "grafico"
+    "destaque"
+    "sugestao";
+}
+
+.sobre       { grid-area: sobre; }
+.area-pratos { grid-area: pratos; }
+.comparativo { grid-area: comparativo; }
+.grafico     { grid-area: grafico; }
+.destaque    { grid-area: destaque; }
+.card-sugestao { grid-area: sugestao; }
+
+/* min-width:0 deixa o item de grid encolher (senão tabela/vídeo estouram).
+   Combinador de filho direto: só as <section> que são filhas do .conteudo. */
+.conteudo > section {
+  min-width: 0;
+}
+
+/* Seções em formato de "card". ID e classes compartilham o mesmo bloco de
+   estilo, como na Aula 6. */
+#pratos,
+.comparativo,
+.grafico,
+.destaque,
+.card-sugestao {
+  background: var(--cor-card);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+  padding: 1.5rem;
+}
+
+/* h1 + p: o parágrafo logo depois do título (combinador de irmão adjacente) */
+.sobre h1 + p {
+  max-width: 60ch;
+  color: var(--cor-texto-suave);
+}
+
+
+/* ---------- 5. CARDS DE PRATOS ---------- */
+/* repeat(auto-fit, minmax()) cria as colunas sozinho, sem media query */
+.grade-pratos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 1.25rem;
+  margin-top: 1rem;
+}
+
+/* z-index:1 aqui NÃO atrapalha o menu: o header tem z-index:100 no contexto
+   raiz, então ele ganha de qualquer card. */
+.card-prato {
+  position: relative;
+  z-index: 1;
+  background: var(--cor-fundo);
+  border: 2px solid var(--cor-borda);
+  border-radius: var(--raio-card);
+  padding: 1rem;
+  transition: var(--transicao-padrao);
+}
+
+/* Pseudo-elemento decorativo: estrelinha no canto */
+.card-prato::before {
+  content: "\2605";
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  color: var(--cor-milho);
+}
+
+/* Aula 7, erro 4: animo com transform (não dispara reflow) e não com width */
+.card-prato:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--sombra);
+}
+
+.card-prato h3 {
+  margin-top: 0;
+  padding-right: 1.5rem;       /* não deixa o título bater na estrela */
+}
+
+.card-prato h3 + .meta {
+  color: var(--cor-texto-suave);
+  font-size: 0.9rem;
+}
+
+/* Classes que o catalogo.js coloca em cada card (Aula 11). O CSS define a
+   aparência e o JavaScript decide quando cada classe vale. */
+.pontuacao {
+  margin: 0.5rem 0 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.faixa-imperdivel { border-color: #166534; }
+.faixa-muito-bom  { border-color: #1d4ed8; }
+.faixa-regular    { border-color: #b45309; }
+.faixa-evitar     { border-color: #b91c1c; }
+
+.faixa-imperdivel .pontuacao { color: #166534; }
+.faixa-muito-bom .pontuacao  { color: #1d4ed8; }
+.faixa-regular .pontuacao    { color: #b45309; }
+.faixa-evitar .pontuacao     { color: #b91c1c; }
+
+/* Painel de resumo criado pelo JavaScript */
+.resumo-catalogo {
+  margin: 1rem 0;
+  padding: 0.75rem 1rem;
+  background: var(--cor-acento-claro);
+  border: 1px solid var(--cor-milho);
+  border-radius: var(--raio);
+}
+
+.resumo-catalogo h3 {
+  margin: 0 0 0.25rem;
+  font-size: 1.05rem;
+}
+
+.resumo-catalogo ul {
+  list-style: none;
+  font-size: 0.9rem;
+}
+
+
+/* ---------- 6. TABELA ---------- */
+.rolagem-tabela {
+  overflow-x: auto;              /* tabela larga rola dentro dela mesma */
+}
+
+.tabela-notas {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabela-notas caption {
+  padding-bottom: 0.5rem;
+  text-align: left;
+  color: var(--cor-texto-suave);
+  font-size: 0.9rem;
+}
+
+.tabela-notas th,
+.tabela-notas td {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--cor-borda);
+  text-align: left;
+}
+
+.tabela-notas th {
+  background: var(--cor-fundo);
+  font-weight: 600;
+}
+
+/* Zebrinha com pseudo-classe estrutural (Aula 7), sem classe extra no HTML */
+.tabela-notas tbody tr:nth-child(even) {
+  background: #f8faf6;
+}
+
+
+/* ---------- 7. GRÁFICO, DESTAQUE E VÍDEO ---------- */
+.grafico canvas {
+  border: 1px solid var(--cor-borda);
+  border-radius: 8px;
+}
+
+.foto-destaque {
+  position: relative;            /* o selo se posiciona em relação à figura */
+  max-width: 560px;
+}
+
+.foto-destaque img {
+  border-radius: var(--raio-card);
+}
+
+.foto-destaque figcaption {
+  margin-top: 0.5rem;
+  color: var(--cor-texto-suave);
+  font-size: 0.9rem;
+}
+
+.selo {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+}
+
+.destaque video {
+  width: 100%;
+  max-width: 560px;
+  background: #000000;
+  border-radius: 8px;
+}
+
+.aviso-formato {
+  display: block;
+  margin: 0.5rem 0 1rem;
+  color: var(--cor-texto-suave);
+}
+
+
+/* ---------- 8. FORMULÁRIO ---------- */
+.card-sugestao fieldset {
+  display: grid;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--cor-borda);
+  border-radius: 8px;
+}
+
+.card-sugestao legend {
+  padding: 0 0.5rem;
+  font-weight: 600;
+}
+
+.card-sugestao input[type="text"],
+.card-sugestao input[type="number"],
+.card-sugestao input[type="email"],
+.card-sugestao select,
+.card-sugestao textarea {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  font: inherit;
+  border: 2px solid var(--cor-borda);
+  border-radius: 8px;
+  transition: border-color 0.2s ease;
+}
+
+.card-sugestao input:focus,
+.card-sugestao select:focus,
+.card-sugestao textarea:focus {
+  border-color: var(--cor-primaria);
+}
+
+.campo-check {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.botao {
+  padding: 0.75rem 1.5rem;
+  font: inherit;
+  font-weight: 600;
+  color: #ffffff;
+  background: var(--cor-primaria);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.botao:hover {
+  background: var(--cor-primaria-escura);
+}
+
+
+/* ---------- 9. RODAPÉ ---------- */
+.rodape {
+  padding: 1.5rem 1rem 2rem;
+  text-align: center;
+  color: var(--cor-texto-suave);
+  border-top: 1px solid var(--cor-borda);
+}
+
+.rodape a:link    { color: var(--cor-primaria); text-decoration: none; }
+.rodape a:visited { color: var(--cor-link-visitado); }
+.rodape a:hover   { text-decoration: underline; }
+.rodape a:active  { color: var(--cor-acento); }
+
+
+/* ---------- 10. RESPONSIVO ---------- */
+@media (min-width: 900px) {
+  /* Telas grandes: tabela e gráfico lado a lado */
+  .conteudo {
+    grid-template-columns: 3fr 2fr;
+    grid-template-areas:
+      "sobre sobre"
+      "pratos pratos"
+      "comparativo grafico"
+      "destaque destaque"
+      "sugestao sugestao";
+  }
+}
+
+/* TODO: o menu some nessa largura e o clique do hambúrguer ainda não abre
+   nada (só a estrutura visual por enquanto). */
+@media (max-width: 640px) {
+  .menu-hamburguer { display: flex; }
+  .menu { display: none; }
+  h1 { font-size: 1.8rem; }
+}
+
+/* Respeita quem pediu menos movimento no sistema */
+@media (prefers-reduced-motion: reduce) {
+  .card-prato,
+  .menu a,
+  .card-sugestao input,
+  .card-sugestao select,
+  .card-sugestao textarea {
+    transition: none;
+  }
+  .card-prato:hover {
+    transform: none;
+  }
+}
